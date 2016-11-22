@@ -9,6 +9,7 @@ import com.amazon.speech.ui.Reprompt;
 import com.ardetrick.alexa.model.RhymeWord;
 import com.ardetrick.alexa.service.DefinitionService;
 import com.ardetrick.alexa.service.RhymeService;
+import com.ardetrick.alexa.util.CramboUtils;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -21,9 +22,7 @@ public class ConfirmWinningGuessIntentAction implements IntentAction {
     private RhymeService rhymeService;
     private DefinitionService definitionService;
 
-    protected ConfirmWinningGuessIntentAction() {
-
-    }
+    protected ConfirmWinningGuessIntentAction() {}
 
     @Inject
     protected ConfirmWinningGuessIntentAction(RhymeService rhymeService, DefinitionService definitionService) {
@@ -33,14 +32,8 @@ public class ConfirmWinningGuessIntentAction implements IntentAction {
 
     @Override
     public SpeechletResponse perform(final Intent intent,final Session session) {
-        boolean gameStarted = false;
-        try {
-            gameStarted = session.getAttribute("gameStarted").toString().equals("true");
-        }catch(NullPointerException npe){
-            gameStarted = false;
-        }
-        if(!gameStarted){
-            return getBadInputResponse();
+        if(!CramboUtils.isGameInProgress(session)){
+            return getGameNotstartedtResponse();
         }else{
             return Optional.ofNullable(intent.getSlot(SLOT_WORD))
                     .map(Slot::getValue)
@@ -49,36 +42,38 @@ public class ConfirmWinningGuessIntentAction implements IntentAction {
         }
     }
 
+
+    /*
+     * Returns a SpeechletResponse which reprompts the user to try again.
+     */
+    private SpeechletResponse getGameNotstartedtResponse() {
+
+        final String responseText = "A game hasn't started yet. You need to tell me what your word rhymes with.";
+        return CramboUtils.getSimpleReprompt(responseText);
+    }
+
+
     /*
      * Returns a SpeechletResponse which reprompts the user to try again.
      */
     private SpeechletResponse getBadInputResponse() {
 
         final String responseText = "A game hasn't started yet. You need to tell me what your word rhymes with.";
-
-        PlainTextOutputSpeech plainTextOutputSpeech = new PlainTextOutputSpeech();
-        plainTextOutputSpeech.setText(responseText);
-
-        Reprompt reprompt = new Reprompt();
-        reprompt.setOutputSpeech(plainTextOutputSpeech);
-
-        return SpeechletResponse.newAskResponse(plainTextOutputSpeech, reprompt);
+        return CramboUtils.getSimpleReprompt(responseText);
     }
-
 
     /*
      * Returns a SpeechletResponse which says hello.
      */
     private SpeechletResponse getThanksForPlayingResponse(final String word, Session session) {
 
-        final String responseText = "Hooray! I win! I guessed your word! The word you were thinking of was: " + word + "!";
+        String lastGuess = (String)session.getAttribute("lastWordGuessed");
+        final String responseText = "Hooray! I win! I guessed your word! The word you were thinking of was: " + lastGuess + "!";
 
         PlainTextOutputSpeech plainTextOutputSpeech = new PlainTextOutputSpeech();
         plainTextOutputSpeech.setText(responseText);
 
         return SpeechletResponse.newTellResponse(plainTextOutputSpeech);
     }
-
-
 
 }

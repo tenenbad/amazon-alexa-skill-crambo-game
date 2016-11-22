@@ -9,6 +9,7 @@ import com.amazon.speech.ui.Reprompt;
 import com.ardetrick.alexa.model.RhymeWord;
 import com.ardetrick.alexa.service.DefinitionService;
 import com.ardetrick.alexa.service.RhymeService;
+import com.ardetrick.alexa.util.CramboUtils;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -22,9 +23,7 @@ public class StartCramboIntentAction implements IntentAction {
     private RhymeService rhymeService;
     private DefinitionService definitionService;
 
-    protected StartCramboIntentAction() {
-
-    }
+    protected StartCramboIntentAction() {}
 
     @Inject
     protected StartCramboIntentAction(RhymeService rhymeService, DefinitionService definitionService) {
@@ -34,15 +33,7 @@ public class StartCramboIntentAction implements IntentAction {
 
     @Override
     public SpeechletResponse perform(final Intent intent,final Session session) {
-
-        boolean gameStarted = false;
-        try {
-            gameStarted = session.getAttribute("gameStarted").toString().equals("true");
-        }catch(NullPointerException npe){
-            gameStarted = false;
-        }
-
-        if(gameStarted){
+        if(CramboUtils.isGameInProgress(session)){
             return getGameInProgressResponse();
         }else{
             return Optional.ofNullable(intent.getSlot(SLOT_WORD))
@@ -52,36 +43,15 @@ public class StartCramboIntentAction implements IntentAction {
         }
     }
 
-    /*
-     * Returns a SpeechletResponse which reprompts the user to try again.
-     */
     private SpeechletResponse getBadInputResponse() {
-
         final String responseText = "You need to tell me what your word rhymes with.";
-
-        PlainTextOutputSpeech plainTextOutputSpeech = new PlainTextOutputSpeech();
-        plainTextOutputSpeech.setText(responseText);
-
-        Reprompt reprompt = new Reprompt();
-        reprompt.setOutputSpeech(plainTextOutputSpeech);
-
-        return SpeechletResponse.newAskResponse(plainTextOutputSpeech, reprompt);
+        return CramboUtils.getSimpleReprompt(responseText);
     }
 
-    /*
- * Returns a SpeechletResponse which tells the user a game is in progress
- */
+
     private SpeechletResponse getGameInProgressResponse() {
-
         final String responseText = "A game is already in progress. Say Quit to end the game";
-
-        PlainTextOutputSpeech plainTextOutputSpeech = new PlainTextOutputSpeech();
-        plainTextOutputSpeech.setText(responseText);
-
-        Reprompt reprompt = new Reprompt();
-        reprompt.setOutputSpeech(plainTextOutputSpeech);
-
-        return SpeechletResponse.newAskResponse(plainTextOutputSpeech, reprompt);
+        return CramboUtils.getSimpleReprompt(responseText);
     }
 
     /*
@@ -93,8 +63,7 @@ public class StartCramboIntentAction implements IntentAction {
         String responseText;
 
         if(rhymes.size() > 0) {
-            Random r = new Random();
-            int randPosition = r.nextInt(rhymes.size());
+            int randPosition = CramboUtils.getNextWordIndex(rhymes);
             RhymeWord randomWord = rhymes.get(randPosition);
             randomWord.setHasBeenGuessed(true);
             rhymes.set(randPosition, randomWord);
@@ -106,18 +75,12 @@ public class StartCramboIntentAction implements IntentAction {
             session.setAttribute("baseWord", word);
             session.setAttribute("lastWordGuessed", randomWord.getWord());
             session.setAttribute("gameStarted", "true");
+            session.setAttribute("rhymeWords", rhymes);
         }else{
             responseText = word + " is either not a real word, or doesn't rhyme with anything.";
         }
 
-        session.setAttribute("rhymeWords", rhymes);
-
-        PlainTextOutputSpeech plainTextOutputSpeech = new PlainTextOutputSpeech();
-        plainTextOutputSpeech.setText(responseText);
-        Reprompt reprompt = new Reprompt();
-        reprompt.setOutputSpeech(plainTextOutputSpeech);
-
-        return SpeechletResponse.newAskResponse(plainTextOutputSpeech, reprompt);
+        return CramboUtils.getSimpleReprompt(responseText);
     }
 
 }

@@ -31,7 +31,7 @@ public class RhymeService {
                 RhymeWord[] snackArray = entity.getBody();
                 return Arrays.asList(snackArray);
             } else {
-                return new ArrayList<RhymeWord>();
+                return new ArrayList<>();
             }
         } catch (final HttpClientErrorException e){
             throw e;
@@ -51,4 +51,9 @@ public class RhymeService {
         return UriComponentsBuilder.fromUriString(RHYME_URL_BASE).queryParam("function", "getRhymes").queryParam("word", word).build().toUri();
     }
 
+    public static List<RhymeWord> filterByNotYetGuessed(List<RhymeWord> rhymesArray) {
+        return rhymesArray.stream().
+                filter(rhymeWord -> !rhymeWord.isHasBeenGuessed()).
+                collect(Collectors.toList());
+    }
 }
