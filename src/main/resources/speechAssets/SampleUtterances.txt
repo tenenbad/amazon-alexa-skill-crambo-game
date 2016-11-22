@@ -1,4 +1,89 @@
-HelloWorldIntent hello {Name}
-HelloWorldIntent hi {Name}
-HelloWorldIntent hello
-HelloWorldIntent hi
+StartCramboIntent I'm thinking of a word that rhymes with {EnglishWord}
+StartCramboIntent I'm thinking of a word rhyming with {EnglishWord}
+StartCramboIntent The word that I'm thinking of rhymes with {EnglishWord}
+StartCramboIntent The word I'm thinking of rhymes with {EnglishWord}
+StartCramboIntent My word rhymes with {EnglishWord}
+
+RespondToGuessIntent No it isn't {EnglishWord}
+RespondToGuessIntent No it's not {EnglishWord}
+RespondToGuessIntent No it is not {EnglishWord}
+RespondToGuessIntent It isn't {EnglishWord}
+RespondToGuessIntent It's not {EnglishWord}
+RespondToGuessIntent It is not {EnglishWord}
+RespondToGuessIntent My word isn't {EnglishWord}
+RespondToGuessIntent My word is not {EnglishWord}
+
+RespondToGuessIntent No it isn't a {EnglishWord}
+RespondToGuessIntent No it's not a {EnglishWord}
+RespondToGuessIntent No it is not a {EnglishWord}
+RespondToGuessIntent It isn't a {EnglishWord}
+RespondToGuessIntent It's not a {EnglishWord}
+RespondToGuessIntent It is not a {EnglishWord}
+RespondToGuessIntent My word isn't a {EnglishWord}
+RespondToGuessIntent My word is not a {EnglishWord}
+
+RespondToGuessIntent No it isn't the {EnglishWord}
+RespondToGuessIntent No it's not the {EnglishWord}
+RespondToGuessIntent No it is not the {EnglishWord}
+RespondToGuessIntent It isn't the {EnglishWord}
+RespondToGuessIntent It's not the {EnglishWord}
+RespondToGuessIntent It is not the {EnglishWord}
+RespondToGuessIntent My word isn't the {EnglishWord}
+RespondToGuessIntent My word is not the {EnglishWord}
+
+RespondToGuessIntent No it isn't an {EnglishWord}
+RespondToGuessIntent No it's not an {EnglishWord}
+RespondToGuessIntent No it is not an {EnglishWord}
+RespondToGuessIntent It isn't an {EnglishWord}
+RespondToGuessIntent It's not an {EnglishWord}
+RespondToGuessIntent It is not an {EnglishWord}
+RespondToGuessIntent My word isn't an {EnglishWord}
+RespondToGuessIntent My word is not an {EnglishWord}
+
+RespondToGuessIntent No it isn't to {EnglishWord}
+RespondToGuessIntent No it's not to {EnglishWord}
+RespondToGuessIntent No it is not to {EnglishWord}
+RespondToGuessIntent It isn't to {EnglishWord}
+RespondToGuessIntent It's not to {EnglishWord}
+RespondToGuessIntent It is not to {EnglishWord}
+RespondToGuessIntent My word isn't to {EnglishWord}
+RespondToGuessIntent My word is not to {EnglishWord}
+
+
+ConfirmWinningGuessIntent Yes it is {EnglishWord}
+ConfirmWinningGuessIntent Yes it's {EnglishWord}
+ConfirmWinningGuessIntent Yes My word is {EnglishWord}
+
+ConfirmWinningGuessIntent Yes it is a {EnglishWord}
+ConfirmWinningGuessIntent Yes it's a {EnglishWord}
+ConfirmWinningGuessIntent Yes My word is a {EnglishWord}
+
+ConfirmWinningGuessIntent Yes it is the {EnglishWord}
+ConfirmWinningGuessIntent Yes it's the {EnglishWord}
+ConfirmWinningGuessIntent Yes My word is the {EnglishWord}
+
+ConfirmWinningGuessIntent Yes it is to {EnglishWord}
+ConfirmWinningGuessIntent Yes it's to {EnglishWord}
+ConfirmWinningGuessIntent Yes My word is to {EnglishWord}
+
+ConfirmWinningGuessIntent Yes it is an {EnglishWord}
+ConfirmWinningGuessIntent Yes it's an {EnglishWord}
+ConfirmWinningGuessIntent Yes My word is an {EnglishWord}
+
+ConfirmWinningGuessIntent Yes it was {EnglishWord}
+ConfirmWinningGuessIntent Yes My word was {EnglishWord}
+
+ConfirmWinningGuessIntent Yes it was a {EnglishWord}
+ConfirmWinningGuessIntent Yes My word was a {EnglishWord}
+
+ConfirmWinningGuessIntent Yes it was the {EnglishWord}
+ConfirmWinningGuessIntent Yes My word was the {EnglishWord}
+
+ConfirmWinningGuessIntent Yes it was an {EnglishWord}
+ConfirmWinningGuessIntent Yes My word was an {EnglishWord}
+
+ConfirmWinningGuessIntent Yes it was to {EnglishWord}
+ConfirmWinningGuessIntent Yes My word was to {EnglishWord}
+
+
+

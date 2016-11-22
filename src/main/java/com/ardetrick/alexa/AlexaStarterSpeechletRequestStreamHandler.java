@@ -19,7 +19,7 @@ public final class AlexaStarterSpeechletRequestStreamHandler extends SpeechletRe
    * Alexa Skill and put the relevant Application Ids in this Set.
    * Replace this with your own ID
    */
-    private static final Set<String> supportedApplicationIds = ImmutableSet.of("amzn1.ask.skill.123abc-123abc-123abc-123abc-123abc");
+    private static final Set<String> supportedApplicationIds = ImmutableSet.of("amzn1.ask.skill.79dc51e0-1800-4e29-9398-c6dec8ecf928");
 
     public AlexaStarterSpeechletRequestStreamHandler() {
         super(Guice.createInjector(new AlexaStarterApplicationModule()).getInstance(AlexaStarterSpeechlet.class),

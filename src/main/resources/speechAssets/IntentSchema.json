@@ -1,11 +1,29 @@
 {
   "intents": [
     {
-      "intent": "HelloWorldIntent",
+      "intent": "StartCramboIntent",
       "slots": [
         {
-          "name": "Name",
-          "type": "AMAZON.US_FIRST_NAME"
+          "name": "EnglishWord",
+          "type": "ENGLISH_WORD"
+        }
+      ]
+    },
+    {
+      "intent": "RespondToGuessIntent",
+      "slots": [
+        {
+          "name": "EnglishWord",
+          "type": "ENGLISH_WORD"
+        }
+      ]
+    },
+    {
+      "intent": "ConfirmWinningGuessIntent",
+      "slots": [
+        {
+          "name": "EnglishWord",
+          "type": "ENGLISH_WORD"
         }
       ]
     },

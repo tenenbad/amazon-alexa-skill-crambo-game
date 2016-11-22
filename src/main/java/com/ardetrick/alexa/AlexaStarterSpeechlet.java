@@ -44,11 +44,7 @@ public class AlexaStarterSpeechlet implements Speechlet {
     public SpeechletResponse onLaunch(final LaunchRequest request, final Session session) throws SpeechletException {
         log.info("onLaunch requestId=" + request.getRequestId() + ", sessionId=" + session.getSessionId());
 
-        String speechText = "Welcome to Alexa, you can ask me hello world";
-
-        SimpleCard card = new SimpleCard();
-        card.setTitle("Welcome!");
-        card.setContent(speechText);
+        String speechText = "Welcome to Crambo. Tell me what your word rhymes with, and I'll try to guess your word.";
 
         PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
         speech.setText(speechText);
@@ -56,7 +52,7 @@ public class AlexaStarterSpeechlet implements Speechlet {
         Reprompt reprompt = new Reprompt();
         reprompt.setOutputSpeech(speech);
 
-        return SpeechletResponse.newAskResponse(speech, reprompt, card);
+        return SpeechletResponse.newAskResponse(speech, reprompt);
     }
 
     /*

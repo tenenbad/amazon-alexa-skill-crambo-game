@@ -23,6 +23,8 @@ public class IntentModule extends AbstractModule {
         mapBinder.addBinding("AMAZON.CancelIntent").to(AmazonStopIntentAction.class);
 
         // custom intents
-        mapBinder.addBinding("HelloWorldIntent").to(HelloWorldIntentAction.class);
+        mapBinder.addBinding("StartCramboIntent").to(StartCramboIntentAction.class);
+        mapBinder.addBinding("RespondToGuessIntent").to(RespondToGuessIntentAction.class);
+        mapBinder.addBinding("ConfirmWinningGuessIntent").to(ConfirmWinningGuessIntentAction.class);
     }
 }
