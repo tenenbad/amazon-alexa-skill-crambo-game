@@ -1,6 +1,7 @@
 package com.ardetrick.alexa.service;
 
 import com.ardetrick.alexa.model.RhymeWord;
+import com.ardetrick.alexa.model.RhymeWordLite;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -51,7 +52,7 @@ public class RhymeService {
         return UriComponentsBuilder.fromUriString(RHYME_URL_BASE).queryParam("function", "getRhymes").queryParam("word", word).build().toUri();
     }
 
-    public static List<RhymeWord> filterByNotYetGuessed(List<RhymeWord> rhymesArray) {
+    public static List<RhymeWordLite> filterByNotYetGuessed(List<RhymeWordLite> rhymesArray) {
         return rhymesArray.stream().
                 filter(rhymeWord -> !rhymeWord.isHasBeenGuessed()).
                 collect(Collectors.toList());

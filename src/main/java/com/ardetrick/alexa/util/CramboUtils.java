@@ -5,6 +5,7 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.ardetrick.alexa.model.RhymeWord;
+import com.ardetrick.alexa.model.RhymeWordLite;
 
 import java.util.List;
 import java.util.Random;
@@ -33,21 +34,27 @@ public class CramboUtils {
         return SpeechletResponse.newAskResponse(plainTextOutputSpeech, reprompt);
     }
 
-    public static int getNextWordIndex(List<RhymeWord> rhymes) {
+    public static int getNextWordIndex(List<?> rhymes) {
         Random r = new Random();
         double percentage = Math.random();
-        if(percentage <= 0.15){
-            //most frequently used word
+
+        try {
+            if (percentage <= 0.15) {
+                //most frequently used word
+                return 0;
+            } else if (percentage <= 60) {
+                //word in the top 25% of frequency of use
+                return r.nextInt((int) Math.floor(rhymes.size() / 4));
+            } else if (percentage <= 85) {
+                //word in the top half of frequency of use
+                return r.nextInt((int) Math.floor(rhymes.size() / 2));
+            } else {
+                //words in the bottom 33%
+                return (int) Math.floor(rhymes.size() / 3) * 2 + (r.nextInt((int) Math.floor(rhymes.size() / 3)));
+            }
+        }catch(IllegalArgumentException e){
+            //if we try to pass random a 0, just return zero instead.
             return 0;
-        }else if (percentage <= 60){
-            //word in the top 25% of frequency of use
-            return r.nextInt((int)Math.floor(rhymes.size()/4));
-        }else if (percentage <= 85){
-            //word in the top half of frequency of use
-            return r.nextInt((int)Math.floor(rhymes.size()/2));
-        }else{
-            //words in the bottom 33%
-            return (int)Math.floor(rhymes.size()/3) * 2 + (r.nextInt((int)Math.floor(rhymes.size()/3)));
         }
 
     }
@@ -58,4 +65,6 @@ public class CramboUtils {
         return SpeechletResponse.newTellResponse(plainTextOutputSpeech);
 
     }
+
+
 }

@@ -19,16 +19,7 @@ public class ConfirmWinningGuessIntentAction implements IntentAction {
 
     private static final String SLOT_WORD = "EnglishWord";
 
-    private RhymeService rhymeService;
-    private DefinitionService definitionService;
-
     protected ConfirmWinningGuessIntentAction() {}
-
-    @Inject
-    protected ConfirmWinningGuessIntentAction(RhymeService rhymeService, DefinitionService definitionService) {
-        this.rhymeService = rhymeService;
-        this.definitionService = definitionService;
-    }
 
     @Override
     public SpeechletResponse perform(final Intent intent,final Session session) {
@@ -41,7 +32,6 @@ public class ConfirmWinningGuessIntentAction implements IntentAction {
                     .orElse(getBadInputResponse());
         }
     }
-
 
     /*
      * Returns a SpeechletResponse which reprompts the user to try again.

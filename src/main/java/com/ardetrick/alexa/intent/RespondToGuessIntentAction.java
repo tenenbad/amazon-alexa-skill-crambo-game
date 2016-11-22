@@ -5,6 +5,7 @@ import com.amazon.speech.slu.Slot;
 import com.amazon.speech.speechlet.Session;
 import com.amazon.speech.speechlet.SpeechletResponse;
 import com.ardetrick.alexa.model.RhymeWord;
+import com.ardetrick.alexa.model.RhymeWordLite;
 import com.ardetrick.alexa.service.DefinitionService;
 import com.ardetrick.alexa.service.RhymeService;
 import com.ardetrick.alexa.util.CramboUtils;
@@ -64,14 +65,14 @@ public class RespondToGuessIntentAction implements IntentAction {
     private SpeechletResponse getNextGuessResponse(final String word, Session session) {
         //Get the rhymes. this time, from the session, so we only need to call the rhymeService once.
         ArrayList<LinkedHashMap> map = (ArrayList<LinkedHashMap>) session.getAttribute("rhymeWords");
-        List<RhymeWord> rhymesArray = RhymeWord.listFromHashMap(map);
-        List<RhymeWord> rhymes  = RhymeService.filterByNotYetGuessed(rhymesArray);
+        List<RhymeWordLite> rhymesArray = RhymeWordLite.listFromHashMap(map);
+        List<RhymeWordLite> rhymes  = RhymeService.filterByNotYetGuessed(rhymesArray);
 
         String responseText = "";
 
         if(rhymes.size() > 0) {
             int randomWordIndex = CramboUtils.getNextWordIndex(rhymes);
-            RhymeWord nextGuess = rhymes.get(randomWordIndex);
+            RhymeWordLite nextGuess = rhymes.get(randomWordIndex);
             nextGuess.setHasBeenGuessed(true);
             rhymes.set(randomWordIndex, nextGuess);
 
@@ -92,7 +93,7 @@ public class RespondToGuessIntentAction implements IntentAction {
         }
     }
 
-    private String addDefinition(String responseText, RhymeWord word) {
+    private String addDefinition(String responseText, RhymeWordLite word) {
         String definitionRaw = definitionService.getDefinition(word.getWord());
         if (definitionRaw == null) {
             responseText += "I can't think of a good clue this time, but I think your word might be " + word.getWord() + "?";

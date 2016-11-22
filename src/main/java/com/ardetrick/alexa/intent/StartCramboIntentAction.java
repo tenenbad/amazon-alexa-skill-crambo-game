@@ -7,6 +7,7 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.ardetrick.alexa.model.RhymeWord;
+import com.ardetrick.alexa.model.RhymeWordLite;
 import com.ardetrick.alexa.service.DefinitionService;
 import com.ardetrick.alexa.service.RhymeService;
 import com.ardetrick.alexa.util.CramboUtils;
@@ -60,7 +61,7 @@ public class StartCramboIntentAction implements IntentAction {
     private SpeechletResponse getDefinitionGuessResponse(final String word, Session session) {
         //Get the rhymes. For now, just choose a random one and tell us
         List<RhymeWord> rhymes = rhymeService.getWordsThatPerfectRhymeWith(word);
-        String responseText;
+        String responseText = "";
 
         if(rhymes.size() > 0) {
             int randPosition = CramboUtils.getNextWordIndex(rhymes);
@@ -68,19 +69,28 @@ public class StartCramboIntentAction implements IntentAction {
             randomWord.setHasBeenGuessed(true);
             rhymes.set(randPosition, randomWord);
 
-            //responseText = randomWord.getWord() + " is a word that rhymes with " + word;
-            String definition = definitionService.removeTrailingSpacesAndPunctuation(definitionService.getDefinition(randomWord.getWord()));
-            responseText = "Is it: " + definition + "?";
+            responseText = addDefinition(responseText, randomWord);
 
             session.setAttribute("baseWord", word);
             session.setAttribute("lastWordGuessed", randomWord.getWord());
             session.setAttribute("gameStarted", "true");
-            session.setAttribute("rhymeWords", rhymes);
+            session.setAttribute("rhymeWords", RhymeWordLite.listFromRhymeWords(rhymes));
         }else{
             responseText = word + " is either not a real word, or doesn't rhyme with anything.";
         }
 
         return CramboUtils.getSimpleReprompt(responseText);
+    }
+
+    private String addDefinition(String responseText, RhymeWord word) {
+        String definitionRaw = definitionService.getDefinition(word.getWord());
+        if (definitionRaw == null) {
+            responseText += "I can't think of a good clue this time, but I think your word might be " + word.getWord() + "?";
+        } else {
+            String definition = definitionService.removeTrailingSpacesAndPunctuation(definitionRaw);
+            responseText += "Is it: " + definition + "?";
+        }
+        return responseText;
     }
 
 }

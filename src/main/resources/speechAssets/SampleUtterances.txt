@@ -4,6 +4,14 @@ StartCramboIntent The word that I'm thinking of rhymes with {EnglishWord}
 StartCramboIntent The word I'm thinking of rhymes with {EnglishWord}
 StartCramboIntent My word rhymes with {EnglishWord}
 
+QuitGameIntent Quit
+QuitGameIntent Quit Game
+QuitGameIntent Quit the game
+QuitGameIntent End Game
+QuitGameIntent End the game
+QuitGameIntent Stop Game
+QuitGameIntent Stop the Game
+
 RespondToGuessIntent No it isn't {EnglishWord}
 RespondToGuessIntent No it's not {EnglishWord}
 RespondToGuessIntent No it is not {EnglishWord}
@@ -84,6 +92,3 @@ ConfirmWinningGuessIntent Yes My word was an {EnglishWord}
 
 ConfirmWinningGuessIntent Yes it was to {EnglishWord}
 ConfirmWinningGuessIntent Yes My word was to {EnglishWord}
-
-
-
