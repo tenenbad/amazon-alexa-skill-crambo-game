@@ -2,6 +2,7 @@ package com.ardetrick.alexa.service;
 
 import com.ardetrick.alexa.model.DictionaryResponse;
 import com.ardetrick.alexa.model.RhymeWord;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -39,13 +40,20 @@ public class DefinitionService {
         }
     }
 
-    public String getDefinition(String word){
-        DictionaryResponse response = getDictionaryResponse(word);
-        try {
-            return response.getResults().get(0).getSenses().get(0).getDefinition();
-        }catch(IndexOutOfBoundsException e){
-            return null;
+    public String getDefinition(String word) {
+        int tries = 0;
+        while (tries < 3){
+            DictionaryResponse response = getDictionaryResponse(word);
+            try {
+                return response.getResults().get(0).getSenses().get(0).getDefinition();
+            } catch (IndexOutOfBoundsException e) {
+                tries++;
+            } catch (NullPointerException e) {
+                tries++;
+            }
         }
+
+        return null;
     }
 
     public String removeTrailingSpacesAndPunctuation(String def){

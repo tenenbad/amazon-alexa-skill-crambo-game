@@ -28,9 +28,6 @@
       ]
     },
     {
-      "intent": "QuitGameIntent"
-    },
-    {
       "intent": "AMAZON.HelpIntent"
     },
     {

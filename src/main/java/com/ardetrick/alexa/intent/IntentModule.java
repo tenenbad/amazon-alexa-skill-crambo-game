@@ -26,7 +26,5 @@ public class IntentModule extends AbstractModule {
         mapBinder.addBinding("StartCramboIntent").to(StartCramboIntentAction.class);
         mapBinder.addBinding("RespondToGuessIntent").to(RespondToGuessIntentAction.class);
         mapBinder.addBinding("ConfirmWinningGuessIntent").to(ConfirmWinningGuessIntentAction.class);
-        mapBinder.addBinding("QuitGameIntent").to(QuitGameIntentAction.class);
-
     }
 }
