@@ -170,4 +170,16 @@ public class Result {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Result{" +
+                "datasets=" + datasets +
+                ", headword='" + headword + '\'' +
+                ", id='" + id + '\'' +
+                ", partOfSpeech='" + partOfSpeech + '\'' +
+                ", senses=" + senses +
+                ", url='" + url + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

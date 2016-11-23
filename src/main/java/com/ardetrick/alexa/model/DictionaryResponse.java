@@ -193,4 +193,18 @@ public class DictionaryResponse {
         this.additionalProperties.put(name, value);
     }
 
+
+    @Override
+    public String toString() {
+        return "DictionaryResponse{" +
+                "status=" + status +
+                ", offset=" + offset +
+                ", limit=" + limit +
+                ", count=" + count +
+                ", total=" + total +
+                ", url='" + url + '\'' +
+                ", results=" + results +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

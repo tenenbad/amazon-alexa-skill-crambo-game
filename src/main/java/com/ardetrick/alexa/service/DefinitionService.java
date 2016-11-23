@@ -1,6 +1,7 @@
 package com.ardetrick.alexa.service;
 
 import com.ardetrick.alexa.model.DictionaryResponse;
+import com.ardetrick.alexa.model.Result;
 import com.ardetrick.alexa.model.RhymeWord;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.http.HttpStatus;
@@ -45,7 +46,12 @@ public class DefinitionService {
         while (tries < 3){
             DictionaryResponse response = getDictionaryResponse(word);
             try {
-                return response.getResults().get(0).getSenses().get(0).getDefinition();
+                String defSense = response.getResults().get(0).getSenses().get(0).getDefinition();
+                if (defSense == null) {
+                    return response.getResults().get(0).getSenses().get(0).getSubSenses().get(0).getDefinition();
+                }else{
+                    return defSense;
+                }
             } catch (IndexOutOfBoundsException e) {
                 tries++;
             } catch (NullPointerException e) {

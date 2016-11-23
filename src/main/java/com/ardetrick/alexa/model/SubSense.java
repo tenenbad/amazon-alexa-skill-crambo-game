@@ -1,17 +1,13 @@
 
 package com.ardetrick.alexa.model;
 
+import com.fasterxml.jackson.annotation.*;
+
+import javax.annotation.Generated;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Generated;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
@@ -19,10 +15,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "definition",
     "examples"
 })
-public class Sense {
+public class SubSense {
 
-    @JsonProperty("subsenses")
-    private List<SubSense> subSenses;
     @JsonProperty("definition")
     private String definition;
     @JsonProperty("examples")
@@ -80,16 +74,6 @@ public class Sense {
         this.additionalProperties.put(name, value);
     }
 
-    @JsonAnyGetter
-    public List<SubSense> getSubSenses() {
-        return subSenses;
-    }
-
-    @JsonAnySetter
-    public void setSubSenses(List<SubSense> subSenses) {
-        this.subSenses = subSenses;
-    }
-
     @Override
     public String toString() {
         return "Sense{" +
@@ -98,6 +82,4 @@ public class Sense {
                 ", additionalProperties=" + additionalProperties +
                 '}';
     }
-
-
 }
