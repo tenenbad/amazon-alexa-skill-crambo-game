@@ -44,7 +44,7 @@ public class AlexaStarterSpeechlet implements Speechlet {
     public SpeechletResponse onLaunch(final LaunchRequest request, final Session session) throws SpeechletException {
         log.info("onLaunch requestId=" + request.getRequestId() + ", sessionId=" + session.getSessionId());
 
-        String speechText = "Welcome to Crambo. Tell me what your word rhymes with, and I'll try to guess your word.";
+        String speechText = "Welcome to Rhyme Detective. Tell me what your word rhymes with, and I'll try to guess your word.";
 
         PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
         speech.setText(speechText);

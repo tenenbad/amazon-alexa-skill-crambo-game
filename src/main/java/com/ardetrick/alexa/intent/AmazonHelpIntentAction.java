@@ -18,7 +18,7 @@ public class AmazonHelpIntentAction implements IntentAction {
 
     @Override
     public SpeechletResponse perform(Intent intent, Session session) {
-        String speechText = "Crambo is a guessing game where I guess your word, and you guess my guess. " +
+        String speechText = "Rhyme Detective is a guessing game where I guess your word, and you guess my guess. " +
                 "Start a game by thinking of a word, then telling me what your word rhymes with. " +
                 "For example if your word is 'cute', you can say: " +
                 "'My word rhymes with boot.' " +
