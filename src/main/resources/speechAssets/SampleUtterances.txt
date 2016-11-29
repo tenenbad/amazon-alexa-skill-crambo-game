@@ -55,7 +55,6 @@ RespondToGuessIntent It is not to {EnglishWord}
 RespondToGuessIntent My word isn't to {EnglishWord}
 RespondToGuessIntent My word is not to {EnglishWord}
 
-
 ConfirmWinningGuessIntent Yes it is {EnglishWord}
 ConfirmWinningGuessIntent Yes it's {EnglishWord}
 ConfirmWinningGuessIntent Yes My word is {EnglishWord}

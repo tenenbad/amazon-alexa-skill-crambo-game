@@ -10,6 +10,7 @@ import com.ardetrick.alexa.model.RhymeWord;
 import com.ardetrick.alexa.model.RhymeWordLite;
 import com.ardetrick.alexa.service.DefinitionService;
 import com.ardetrick.alexa.service.RhymeService;
+import com.ardetrick.alexa.service.RhymeServiceBetter;
 import com.ardetrick.alexa.util.CramboUtils;
 
 import javax.inject.Inject;
@@ -21,13 +22,13 @@ public class StartCramboIntentAction implements IntentAction {
 
     private static final String SLOT_WORD = "EnglishWord";
 
-    private RhymeService rhymeService;
+    private RhymeServiceBetter rhymeService;
     private DefinitionService definitionService;
 
     protected StartCramboIntentAction() {}
 
     @Inject
-    protected StartCramboIntentAction(RhymeService rhymeService, DefinitionService definitionService) {
+    protected StartCramboIntentAction(RhymeServiceBetter rhymeService, DefinitionService definitionService) {
         this.rhymeService = rhymeService;
         this.definitionService = definitionService;
     }

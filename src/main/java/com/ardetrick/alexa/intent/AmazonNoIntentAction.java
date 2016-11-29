@@ -4,7 +4,6 @@ import com.amazon.speech.slu.Intent;
 import com.amazon.speech.slu.Slot;
 import com.amazon.speech.speechlet.Session;
 import com.amazon.speech.speechlet.SpeechletResponse;
-import com.ardetrick.alexa.model.RhymeWord;
 import com.ardetrick.alexa.model.RhymeWordLite;
 import com.ardetrick.alexa.service.DefinitionService;
 import com.ardetrick.alexa.service.RhymeService;
@@ -12,19 +11,21 @@ import com.ardetrick.alexa.service.RhymeServiceBetter;
 import com.ardetrick.alexa.util.CramboUtils;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Optional;
 
-public class RespondToGuessIntentAction implements IntentAction {
+public class AmazonNoIntentAction implements IntentAction {
 
-    private static final String SLOT_WORD = "EnglishWord";
 
     private RhymeServiceBetter rhymeService;
     private DefinitionService definitionService;
 
-    protected RespondToGuessIntentAction() {}
+    protected AmazonNoIntentAction() {}
 
     @Inject
-    protected RespondToGuessIntentAction(RhymeServiceBetter rhymeService, DefinitionService definitionService) {
+    protected AmazonNoIntentAction(RhymeServiceBetter rhymeService, DefinitionService definitionService) {
         this.rhymeService = rhymeService;
         this.definitionService = definitionService;
     }
@@ -34,10 +35,7 @@ public class RespondToGuessIntentAction implements IntentAction {
         if(!CramboUtils.isGameInProgress(session)){
             return getGameNotstartedtResponse();
         }else{
-            return Optional.ofNullable(intent.getSlot(SLOT_WORD))
-                    .map(Slot::getValue)
-                    .map(word -> getNextGuessResponse(word, session))
-                    .orElse(getBadInputResponse());
+            return getNextGuessResponse("", session);
         }
     }
 

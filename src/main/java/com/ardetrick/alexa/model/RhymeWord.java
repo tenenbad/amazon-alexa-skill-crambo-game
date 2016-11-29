@@ -13,10 +13,8 @@ import java.util.List;
 public class RhymeWord {
 
     private String word;
-    private int freq;
-    private String score;
-    private String flags;
-    private String syllables;
+    private int score;
+    private String numSyllables;
     private boolean hasBeenGuessed;
 
     public String getWord() {
@@ -27,36 +25,20 @@ public class RhymeWord {
         this.word = word;
     }
 
-    public int getFreq() {
-        return freq;
-    }
-
-    public void setFreq(int freq) {
-        this.freq = freq;
-    }
-
-    public String getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
-    public String getFlags() {
-        return flags;
+    public String getNumSyllables() {
+        return numSyllables;
     }
 
-    public void setFlags(String flags) {
-        this.flags = flags;
-    }
-
-    public String getSyllables() {
-        return syllables;
-    }
-
-    public void setSyllables(String syllables) {
-        this.syllables = syllables;
+    public void setNumSyllables(String numSyllables) {
+        this.numSyllables = numSyllables;
     }
 
     public boolean isHasBeenGuessed() {
@@ -71,10 +53,8 @@ public class RhymeWord {
     public String toString() {
         return "RhymeWord{" +
                 "word='" + word + '\'' +
-                ", freq=" + freq +
-                ", score='" + score + '\'' +
-                ", flags='" + flags + '\'' +
-                ", syllables='" + syllables + '\'' +
+                ", score=" + score +
+                ", numSyllables='" + numSyllables + '\'' +
                 ", hasBeenGuessed=" + hasBeenGuessed +
                 '}';
     }
@@ -84,10 +64,7 @@ public class RhymeWord {
         for(LinkedHashMap map : mapList){
             RhymeWord rw = new RhymeWord();
             rw.setWord((String) map.get("word"));
-            rw.setFreq((int) map.get("freq"));
-            rw.setScore((String) map.get("score"));
-            rw.setFlags((String) map.get("flags"));
-            rw.setSyllables((String) map.get("syllables"));
+            rw.setScore((int) map.get("score"));
             rw.setHasBeenGuessed((boolean) map.get("hasBeenGuessed"));
             newList.add(rw);
         }

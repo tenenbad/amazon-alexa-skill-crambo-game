@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 /**
  * Created by Drew Tenenbaum on 11/21/2016.
  */
-public class RhymeService {
+public class RhymeServiceBetter {
 
-    public String RHYME_URL_BASE = "http://rhymebrain.com/talk";
+    public String RHYME_URL_BASE = "http://api.datamuse.com/words";
 
     public List<RhymeWord> getWordsThatRhymeWith(String baseWord){
         URI targetUrl = getWebServiceURI(baseWord);
@@ -40,7 +40,7 @@ public class RhymeService {
     }
 
     public List<RhymeWord> getWordsThatPerfectRhymeWith(String baseWord){
-        return getWordsThatRhymeWith(baseWord).stream().sorted(new Comparator<RhymeWord>() {
+        return getWordsThatRhymeWith(baseWord).stream().filter(rhymeWord -> !rhymeWord.getWord().contains(" ")).sorted(new Comparator<RhymeWord>() {
             @Override
             public int compare(RhymeWord o1, RhymeWord o2) {
                 return o2.getScore() - o1.getScore();
@@ -49,7 +49,7 @@ public class RhymeService {
     }
 
     private URI getWebServiceURI(String word) {
-        return UriComponentsBuilder.fromUriString(RHYME_URL_BASE).queryParam("function", "getRhymes").queryParam("word", word).build().toUri();
+        return UriComponentsBuilder.fromUriString(RHYME_URL_BASE).queryParam("rel_rhy", word).build().toUri();
     }
 
     public static List<RhymeWordLite> filterByNotYetGuessed(List<RhymeWordLite> rhymesArray) {

@@ -39,13 +39,13 @@ public class CramboUtils {
         double percentage = Math.random();
 
         try {
-            if (percentage <= 0.55) {
+            if (percentage <= 0.40) {
                 //most frequently used word
                 return 0;
-            } else if (percentage <= 0.75) {
+            } else if (percentage <= 0.68) {
                 //word in the top 25% of frequency of use
                 return r.nextInt((int) Math.floor(rhymes.size() / 4));
-            } else if (percentage <= 0.92) {
+            } else if (percentage <= 0.95) {
                 //word in the top half of frequency of use
                 return r.nextInt((int) Math.floor(rhymes.size() / 2));
             } else {

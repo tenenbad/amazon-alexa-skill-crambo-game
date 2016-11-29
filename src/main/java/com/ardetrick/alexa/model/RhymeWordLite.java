@@ -66,7 +66,7 @@ public class RhymeWordLite {
         for(RhymeWord notLiteWord : notLiteList){
             RhymeWordLite rw = new RhymeWordLite();
             rw.setWord(notLiteWord.getWord());
-            rw.setFreq(notLiteWord.getFreq());
+            rw.setFreq(notLiteWord.getScore());
             rw.setHasBeenGuessed(notLiteWord.isHasBeenGuessed());
             newList.add(rw);
         }
