@@ -71,11 +71,11 @@ public class CramboUtils {
         String definitionRaw = definitionService.getDefinition(word.getWord());
         if (definitionRaw == null) {
             responseText += "I can't think of a good clue this time, but I think your word might be " + word.getWord() + "?";
-            session.setAttribute("w", "true");
+            session.setAttribute("ww", "true");
         } else {
             String definition = definitionService.removeTrailingSpacesAndPunctuation(definitionRaw);
             responseText += "Is it: " + definition + "?";
-            session.setAttribute("w", "false");
+            session.setAttribute("ww", "false");
         }
         return responseText;
     }

@@ -78,7 +78,7 @@ public class RespondToGuessIntentAction implements IntentAction {
             rhymes.set(randomWordIndex, nextGuess);
 
             String expectedWord = (String) session.getAttribute("lastWordGuessed");
-            if(session.getAttribute("w").equals("true")){
+            if(session.getAttribute("ww").equals("true")){
                 responseText += "";
             }else if(!word.equalsIgnoreCase(expectedWord)){
                 responseText+="I was thinking your word might be" + expectedWord + ". ";
