@@ -58,7 +58,12 @@ public class ConfirmWinningGuessIntentAction implements IntentAction {
     private SpeechletResponse getThanksForPlayingResponse(final String word, Session session) {
 
         String lastGuess = (String)session.getAttribute("lastWordGuessed");
-        final String responseText = "Hooray! I win! I guessed your word! The word you were thinking of was: " + lastGuess + "!";
+        int numTries = (int)session.getAttribute("numGuesses");
+        String tryText = numTries == 1 ? "try" : "tries";
+        //final String responseText = "Hooray! I win! I guessed your word! The word you were thinking of was: " + lastGuess + "!";
+        final String responseText = "Hooray! I win! I guessed your word, and it only took me " + numTries + " " + tryText + "! The word you were thinking of was: " + lastGuess + "!";
+        //sfinal String responseText = "Hooray! I win! I guessed your word, and it only took me " + numTries + tryText + "! ";
+
 
         PlainTextOutputSpeech plainTextOutputSpeech = new PlainTextOutputSpeech();
         plainTextOutputSpeech.setText(responseText);

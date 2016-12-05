@@ -77,13 +77,15 @@ public class RespondToGuessIntentAction implements IntentAction {
             nextGuess.setHasBeenGuessed(true);
             rhymes.set(randomWordIndex, nextGuess);
 
-            String expectedWord = (String)session.getAttribute("lastWordGuessed");
-            if(!word.equalsIgnoreCase(expectedWord)){
-                responseText = "I was actually thinking it might be " + expectedWord + ". ";
+            String expectedWord = (String) session.getAttribute("lastWordGuessed");
+            if(session.getAttribute("w").equals("true")){
+                responseText += "";
+            }else if(!word.equalsIgnoreCase(expectedWord)){
+                responseText+="I was thinking your word might be" + expectedWord + ". ";
             }
 
-            responseText = addDefinition(responseText, nextGuess);
-
+            responseText = CramboUtils.addDefinition(definitionService, responseText, nextGuess, session);
+            incrementNumGuesses(session);
             session.setAttribute("lastWordGuessed", nextGuess.getWord());
             session.setAttribute("rhymeWords", rhymes);
             return CramboUtils.getSimpleReprompt(responseText);
@@ -94,16 +96,10 @@ public class RespondToGuessIntentAction implements IntentAction {
         }
     }
 
-    private String addDefinition(String responseText, RhymeWordLite word) {
-        String definitionRaw = definitionService.getDefinition(word.getWord());
-        if (definitionRaw == null) {
-            responseText += "I can't think of a good clue this time, but I think your word might be " + word.getWord() + "?";
-        } else {
-            String definition = definitionService.removeTrailingSpacesAndPunctuation(definitionRaw);
-            responseText += "Is it: " + definition + "?";
-        }
-        return responseText;
+    private void incrementNumGuesses(Session session) {
+        int numTries = (int) session.getAttribute("numGuesses");
+        numTries++;
+        session.setAttribute("numGuesses", numTries);
     }
-
 
 }

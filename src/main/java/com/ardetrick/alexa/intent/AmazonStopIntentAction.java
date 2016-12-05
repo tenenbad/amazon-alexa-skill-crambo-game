@@ -18,7 +18,7 @@ public class AmazonStopIntentAction implements IntentAction {
 
     @Override
     public SpeechletResponse perform(Intent intent, Session session) {
-        String speechText = "Good bye!";
+        String speechText = "";
 
         PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
         speech.setText(speechText);

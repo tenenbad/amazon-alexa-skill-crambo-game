@@ -72,4 +72,12 @@ public class RhymeWordLite {
         }
         return newList;
     }
+
+    public static RhymeWordLite toRhymeWordLite(RhymeWord notLiteWord) {
+        RhymeWordLite rw = new RhymeWordLite();
+        rw.setWord(notLiteWord.getWord());
+        rw.setFreq(notLiteWord.getScore());
+        rw.setHasBeenGuessed(notLiteWord.isHasBeenGuessed());
+        return rw;
+    }
 }

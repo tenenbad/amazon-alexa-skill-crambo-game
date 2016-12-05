@@ -6,6 +6,7 @@ import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.ardetrick.alexa.model.RhymeWord;
 import com.ardetrick.alexa.model.RhymeWordLite;
+import com.ardetrick.alexa.service.DefinitionService;
 
 import java.util.List;
 import java.util.Random;
@@ -64,6 +65,19 @@ public class CramboUtils {
         plainTextOutputSpeech.setText(responseText);
         return SpeechletResponse.newTellResponse(plainTextOutputSpeech);
 
+    }
+
+    public static String addDefinition(DefinitionService definitionService, String responseText, RhymeWordLite word, Session session) {
+        String definitionRaw = definitionService.getDefinition(word.getWord());
+        if (definitionRaw == null) {
+            responseText += "I can't think of a good clue this time, but I think your word might be " + word.getWord() + "?";
+            session.setAttribute("w", "true");
+        } else {
+            String definition = definitionService.removeTrailingSpacesAndPunctuation(definitionRaw);
+            responseText += "Is it: " + definition + "?";
+            session.setAttribute("w", "false");
+        }
+        return responseText;
     }
 
 

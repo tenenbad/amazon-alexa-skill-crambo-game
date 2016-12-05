@@ -73,8 +73,9 @@ public class StartCramboIntentAction implements IntentAction {
                 randomWord.setHasBeenGuessed(true);
                 rhymes.set(randPosition, randomWord);
 
-                responseText = addDefinition(responseText, randomWord);
+                responseText = CramboUtils.addDefinition(definitionService, responseText, RhymeWordLite.toRhymeWordLite(randomWord), session);
 
+                session.setAttribute("numGuesses", 1);
                 session.setAttribute("baseWord", word);
                 session.setAttribute("lastWordGuessed", randomWord.getWord());
                 session.setAttribute("gameStarted", "true");
@@ -92,15 +93,6 @@ public class StartCramboIntentAction implements IntentAction {
     }
 
 
-    private String addDefinition(String responseText, RhymeWord word) {
-        String definitionRaw = definitionService.getDefinition(word.getWord());
-        if (definitionRaw == null) {
-            responseText += "I can't think of a good clue this time, but I think your word might be " + word.getWord() + "?";
-        } else {
-            String definition = definitionService.removeTrailingSpacesAndPunctuation(definitionRaw);
-            responseText += "Is it: " + definition + "?";
-        }
-        return responseText;
-    }
+
 
 }
