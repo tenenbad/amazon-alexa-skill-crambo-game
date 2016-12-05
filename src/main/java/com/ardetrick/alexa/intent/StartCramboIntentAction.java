@@ -65,23 +65,32 @@ public class StartCramboIntentAction implements IntentAction {
         String responseText = "";
 
         if(rhymes.size() > 0) {
-            int randPosition = CramboUtils.getNextWordIndex(rhymes);
-            RhymeWord randomWord = rhymes.get(randPosition);
-            randomWord.setHasBeenGuessed(true);
-            rhymes.set(randPosition, randomWord);
+            if(isRhymeServiceDown(rhymes)) {
+                responseText = "I'm having trouble thinking of rhymes right now. Try again later.";
+            }else{
+                int randPosition = CramboUtils.getNextWordIndex(rhymes);
+                RhymeWord randomWord = rhymes.get(randPosition);
+                randomWord.setHasBeenGuessed(true);
+                rhymes.set(randPosition, randomWord);
 
-            responseText = addDefinition(responseText, randomWord);
+                responseText = addDefinition(responseText, randomWord);
 
-            session.setAttribute("baseWord", word);
-            session.setAttribute("lastWordGuessed", randomWord.getWord());
-            session.setAttribute("gameStarted", "true");
-            session.setAttribute("rhymeWords", RhymeWordLite.listFromRhymeWords(rhymes));
+                session.setAttribute("baseWord", word);
+                session.setAttribute("lastWordGuessed", randomWord.getWord());
+                session.setAttribute("gameStarted", "true");
+                session.setAttribute("rhymeWords", RhymeWordLite.listFromRhymeWords(rhymes));
+            }
         }else{
             responseText = word + " is either not a real word, or doesn't rhyme with anything.";
         }
 
         return CramboUtils.getSimpleReprompt(responseText);
     }
+
+    private boolean isRhymeServiceDown(List<RhymeWord> rhymes) {
+        return rhymes.size() == 1 && rhymes.get(0).isDummy();
+    }
+
 
     private String addDefinition(String responseText, RhymeWord word) {
         String definitionRaw = definitionService.getDefinition(word.getWord());

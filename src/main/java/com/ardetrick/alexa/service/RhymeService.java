@@ -32,7 +32,10 @@ public class RhymeService {
                 RhymeWord[] snackArray = entity.getBody();
                 return Arrays.asList(snackArray);
             } else {
-                return new ArrayList<>();
+                RhymeWord dummyWord = new RhymeWord();
+                dummyWord.setDummy(true);
+                List<RhymeWord> dummyList = new ArrayList<>();
+                return dummyList;
             }
         } catch (final HttpClientErrorException e){
             throw e;

@@ -16,6 +16,7 @@ public class RhymeWord {
     private int score;
     private String numSyllables;
     private boolean hasBeenGuessed;
+    private boolean isDummy;
 
     public String getWord() {
         return word;
@@ -47,6 +48,14 @@ public class RhymeWord {
 
     public void setHasBeenGuessed(boolean hasBeenGuessed) {
         this.hasBeenGuessed = hasBeenGuessed;
+    }
+
+    public boolean isDummy() {
+        return isDummy;
+    }
+
+    public void setDummy(boolean dummy) {
+        isDummy = dummy;
     }
 
     @Override
