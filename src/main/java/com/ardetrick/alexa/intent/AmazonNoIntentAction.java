@@ -16,19 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
-public class AmazonNoIntentAction implements IntentAction {
-
-
-    private RhymeServiceBetter rhymeService;
-    private DefinitionService definitionService;
-
-    protected AmazonNoIntentAction() {}
-
-    @Inject
-    protected AmazonNoIntentAction(RhymeServiceBetter rhymeService, DefinitionService definitionService) {
-        this.rhymeService = rhymeService;
-        this.definitionService = definitionService;
-    }
+public class AmazonNoIntentAction extends RespondToGuessIntentAction {
 
     @Override
     public SpeechletResponse perform(final Intent intent,final Session session) {
@@ -38,68 +26,5 @@ public class AmazonNoIntentAction implements IntentAction {
             return getNextGuessResponse("", session);
         }
     }
-
-    /*
-     * Returns a SpeechletResponse which reprompts the user to try again.
-     */
-    private SpeechletResponse getGameNotstartedtResponse() {
-
-        final String responseText = "A game hasn't started yet. You need to tell me what your word rhymes with.";
-        return CramboUtils.getSimpleReprompt(responseText);
-    }
-
-    /*
- * Returns a SpeechletResponse which reprompts the user to try again.
- */
-    private SpeechletResponse getBadInputResponse() {
-
-        final String responseText = "I didn't understand your response. Please try again.";
-        return CramboUtils.getSimpleReprompt(responseText);
-    }
-
-
-    /*
-         * Returns a SpeechletResponse which says hello.
-         */
-    private SpeechletResponse getNextGuessResponse(final String word, Session session) {
-        //Get the rhymes. this time, from the session, so we only need to call the rhymeService once.
-        ArrayList<LinkedHashMap> map = (ArrayList<LinkedHashMap>) session.getAttribute("rhymeWords");
-        List<RhymeWordLite> rhymesArray = RhymeWordLite.listFromHashMap(map);
-        List<RhymeWordLite> rhymes  = RhymeService.filterByNotYetGuessed(rhymesArray);
-
-        String responseText = "";
-
-        if(rhymes.size() > 0) {
-            int randomWordIndex = CramboUtils.getNextWordIndex(rhymes);
-            RhymeWordLite nextGuess = rhymes.get(randomWordIndex);
-            nextGuess.setHasBeenGuessed(true);
-            rhymes.set(randomWordIndex, nextGuess);
-
-            String expectedWord = (String) session.getAttribute("lastWordGuessed");
-            if(session.getAttribute("ww").equals("true")){
-                responseText += "";
-            }else if(!word.equalsIgnoreCase(expectedWord)){
-                responseText+="I was thinking your word might be" + expectedWord + ". ";
-            }
-
-            responseText = CramboUtils.addDefinition(definitionService, responseText, nextGuess, session);
-            incrementNumGuesses(session);
-            session.setAttribute("lastWordGuessed", nextGuess.getWord());
-            session.setAttribute("rhymeWords", rhymes);
-            return CramboUtils.getSimpleReprompt(responseText);
-        }else{
-            responseText = "I cannot guess your word. You have beaten me. Goodbye.";
-            return CramboUtils.getSimpleTell(responseText);
-
-        }
-    }
-
-    private void incrementNumGuesses(Session session) {
-        int numTries = (int) session.getAttribute("numGuesses");
-        numTries++;
-        session.setAttribute("numGuesses", numTries);
-    }
-
-
 
 }

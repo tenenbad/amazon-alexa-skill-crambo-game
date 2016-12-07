@@ -9,9 +9,7 @@ import com.ardetrick.alexa.util.CramboUtils;
 
 import java.util.Optional;
 
-public class AmazonYesIntentAction implements IntentAction {
-
-    protected AmazonYesIntentAction() {}
+public class AmazonYesIntentAction extends ConfirmWinningGuessIntentAction {
 
     @Override
     public SpeechletResponse perform(final Intent intent,final Session session) {
@@ -20,39 +18,6 @@ public class AmazonYesIntentAction implements IntentAction {
         }else{
             return getThanksForPlayingResponse("", session);
         }
-    }
-
-    /*
-     * Returns a SpeechletResponse which reprompts the user to try again.
-     */
-    private SpeechletResponse getGameNotstartedtResponse() {
-
-        final String responseText = "A game hasn't started yet. You need to tell me what your word rhymes with.";
-        return CramboUtils.getSimpleReprompt(responseText);
-    }
-
-
-    /*
-     * Returns a SpeechletResponse which reprompts the user to try again.
-     */
-    private SpeechletResponse getBadInputResponse() {
-
-        final String responseText = "A game hasn't started yet. You need to tell me what your word rhymes with.";
-        return CramboUtils.getSimpleReprompt(responseText);
-    }
-
-    /*
-     * Returns a SpeechletResponse which says hello.
-     */
-    private SpeechletResponse getThanksForPlayingResponse(final String word, Session session) {
-
-        String lastGuess = (String)session.getAttribute("lastWordGuessed");
-        final String responseText = "Hooray! I win! I guessed your word! The word you were thinking of was: " + lastGuess + "!";
-
-        PlainTextOutputSpeech plainTextOutputSpeech = new PlainTextOutputSpeech();
-        plainTextOutputSpeech.setText(responseText);
-
-        return SpeechletResponse.newTellResponse(plainTextOutputSpeech);
     }
 
 }

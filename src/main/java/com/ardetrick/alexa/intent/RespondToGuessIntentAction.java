@@ -16,17 +16,15 @@ import java.util.*;
 
 public class RespondToGuessIntentAction implements IntentAction {
 
-    private static final String SLOT_WORD = "EnglishWord";
+    protected static final String SLOT_WORD = "EnglishWord";
 
-    private RhymeServiceBetter rhymeService;
-    private DefinitionService definitionService;
+    protected RhymeServiceBetter rhymeService;
+    protected DefinitionService definitionService;
 
-    protected RespondToGuessIntentAction() {}
 
-    @Inject
-    protected RespondToGuessIntentAction(RhymeServiceBetter rhymeService, DefinitionService definitionService) {
-        this.rhymeService = rhymeService;
-        this.definitionService = definitionService;
+    protected RespondToGuessIntentAction() {
+        this.rhymeService = new RhymeServiceBetter();
+        this.definitionService = new DefinitionService();
     }
 
     @Override
@@ -44,7 +42,7 @@ public class RespondToGuessIntentAction implements IntentAction {
     /*
      * Returns a SpeechletResponse which reprompts the user to try again.
      */
-    private SpeechletResponse getGameNotstartedtResponse() {
+    protected SpeechletResponse getGameNotstartedtResponse() {
 
         final String responseText = "A game hasn't started yet. You need to tell me what your word rhymes with.";
         return CramboUtils.getSimpleReprompt(responseText);
@@ -53,7 +51,7 @@ public class RespondToGuessIntentAction implements IntentAction {
     /*
  * Returns a SpeechletResponse which reprompts the user to try again.
  */
-    private SpeechletResponse getBadInputResponse() {
+    protected SpeechletResponse getBadInputResponse() {
 
         final String responseText = "I didn't understand your response. Please try again.";
         return CramboUtils.getSimpleReprompt(responseText);
@@ -63,7 +61,7 @@ public class RespondToGuessIntentAction implements IntentAction {
     /*
      * Returns a SpeechletResponse which says hello.
      */
-    private SpeechletResponse getNextGuessResponse(final String word, Session session) {
+    protected SpeechletResponse getNextGuessResponse(final String word, Session session) {
         //Get the rhymes. this time, from the session, so we only need to call the rhymeService once.
         ArrayList<LinkedHashMap> map = (ArrayList<LinkedHashMap>) session.getAttribute("rhymeWords");
         List<RhymeWordLite> rhymesArray = RhymeWordLite.listFromHashMap(map);
@@ -78,10 +76,10 @@ public class RespondToGuessIntentAction implements IntentAction {
             rhymes.set(randomWordIndex, nextGuess);
 
             String expectedWord = (String) session.getAttribute("lastWordGuessed");
-            if(session.getAttribute("ww").equals("true")){
+            if(session.getAttribute("wasBadGuess").equals("true")){
                 responseText += "";
             }else if(!word.equalsIgnoreCase(expectedWord)){
-                responseText+="I was thinking your word might be" + expectedWord + ". ";
+                responseText+="I was thinking your word might be " + expectedWord + ". ";
             }
 
             responseText = CramboUtils.addDefinition(definitionService, responseText, nextGuess, session);
@@ -96,7 +94,7 @@ public class RespondToGuessIntentAction implements IntentAction {
         }
     }
 
-    private void incrementNumGuesses(Session session) {
+    protected void incrementNumGuesses(Session session) {
         int numTries = (int) session.getAttribute("numGuesses");
         numTries++;
         session.setAttribute("numGuesses", numTries);

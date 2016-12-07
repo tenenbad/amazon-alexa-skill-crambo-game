@@ -68,15 +68,17 @@ public class CramboUtils {
     }
 
     public static String addDefinition(DefinitionService definitionService, String responseText, RhymeWordLite word, Session session) {
+
         String definitionRaw = definitionService.getDefinition(word.getWord());
         if (definitionRaw == null) {
             responseText += "I can't think of a good clue this time, but I think your word might be " + word.getWord() + "?";
-            session.setAttribute("ww", "true");
+            session.setAttribute("wasBadGuess", "true");
         } else {
             String definition = definitionService.removeTrailingSpacesAndPunctuation(definitionRaw);
             responseText += "Is it: " + definition + "?";
-            session.setAttribute("ww", "false");
+            session.setAttribute("wasBadGuess", "false");
         }
+
         return responseText;
     }
 

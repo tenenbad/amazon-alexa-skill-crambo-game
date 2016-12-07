@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class ConfirmWinningGuessIntentAction implements IntentAction {
 
-    private static final String SLOT_WORD = "EnglishWord";
+    protected static final String SLOT_WORD = "EnglishWord";
 
     protected ConfirmWinningGuessIntentAction() {}
 
@@ -36,7 +36,7 @@ public class ConfirmWinningGuessIntentAction implements IntentAction {
     /*
      * Returns a SpeechletResponse which reprompts the user to try again.
      */
-    private SpeechletResponse getGameNotstartedtResponse() {
+    protected SpeechletResponse getGameNotstartedtResponse() {
 
         final String responseText = "A game hasn't started yet. You need to tell me what your word rhymes with.";
         return CramboUtils.getSimpleReprompt(responseText);
@@ -46,7 +46,7 @@ public class ConfirmWinningGuessIntentAction implements IntentAction {
     /*
      * Returns a SpeechletResponse which reprompts the user to try again.
      */
-    private SpeechletResponse getBadInputResponse() {
+    protected SpeechletResponse getBadInputResponse() {
 
         final String responseText = "A game hasn't started yet. You need to tell me what your word rhymes with.";
         return CramboUtils.getSimpleReprompt(responseText);
@@ -55,7 +55,7 @@ public class ConfirmWinningGuessIntentAction implements IntentAction {
     /*
      * Returns a SpeechletResponse which says hello.
      */
-    private SpeechletResponse getThanksForPlayingResponse(final String word, Session session) {
+    protected SpeechletResponse getThanksForPlayingResponse(final String word, Session session) {
 
         String lastGuess = (String)session.getAttribute("lastWordGuessed");
         int numTries = (int)session.getAttribute("numGuesses");
